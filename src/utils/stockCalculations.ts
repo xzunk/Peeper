@@ -4,7 +4,7 @@ export interface StockMetrics {
   eps: number;
   totalEquity: number;
   totalRevenue: number;
-  operatingCashFlow: number;
+ 
   outstandingShares: number;
   netIncome: number;
   totalAssets: number;
@@ -59,5 +59,5 @@ export const industryBenchmarks = {
   pb: 2.5,
   ps: 2.0,
   peg: 1.0,
-  nav: 1.2, // Price to NAV benchmark
+  nav: ,
 };
