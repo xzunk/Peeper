@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  base: "./", // Add this line to fix static file serving
   plugins: [
     react(),
     mode === 'development' &&
