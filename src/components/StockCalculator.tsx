@@ -24,8 +24,7 @@ const StockCalculator = () => {
     outstandingShares: 0,
     netIncome: 0,
     totalAssets: 0,
-    totalLiabilities: 0,
-    ebitda: 0
+    totalLiabilities: 0
   });
   const [ratios, setRatios] = useState<ValuationRatios | null>(null);
 
@@ -54,16 +53,16 @@ const StockCalculator = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'undervalued': return 'text-success';
-      case 'overvalued': return 'text-warning';
-      default: return 'text-slate';
+      case 'undervalued': return 'text-green-600';
+      case 'overvalued': return 'text-red-600';
+      default: return 'text-slate-600';
     }
   };
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-3xl font-bold text-navy mb-8 text-center">
-        Stock Valuation Calculator
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        Stock Valuation Calculator (LKR)
       </h1>
       
       <div className="grid md:grid-cols-2 gap-8">
@@ -77,22 +76,21 @@ const StockCalculator = () => {
                 name="ticker"
                 value={metrics.ticker}
                 onChange={handleInputChange}
-                placeholder="e.g., AAPL"
+                placeholder="e.g., JKH"
                 className="font-mono"
               />
             </div>
             
             {[
-              { label: 'Stock Price ($)', name: 'price' },
-              { label: 'Earnings Per Share ($)', name: 'eps' },
-              { label: 'Total Equity ($M)', name: 'totalEquity' },
-              { label: 'Total Revenue ($M)', name: 'totalRevenue' },
-              { label: 'Operating Cash Flow ($M)', name: 'operatingCashFlow' },
-              { label: 'Outstanding Shares (M)', name: 'outstandingShares' },
-              { label: 'Net Income ($M)', name: 'netIncome' },
-              { label: 'Total Assets ($M)', name: 'totalAssets' },
-              { label: 'Total Liabilities ($M)', name: 'totalLiabilities' },
-              { label: 'EBITDA ($M)', name: 'ebitda' }
+              { label: 'Stock Price (LKR)', name: 'price' },
+              { label: 'Earnings Per Share (LKR)', name: 'eps' },
+              { label: 'Total Equity (LKR Mn)', name: 'totalEquity' },
+              { label: 'Total Revenue (LKR Mn)', name: 'totalRevenue' },
+              { label: 'Operating Cash Flow (LKR Mn)', name: 'operatingCashFlow' },
+              { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' },
+              { label: 'Net Income (LKR Mn)', name: 'netIncome' },
+              { label: 'Total Assets (LKR Mn)', name: 'totalAssets' },
+              { label: 'Total Liabilities (LKR Mn)', name: 'totalLiabilities' }
             ].map(field => (
               <div key={field.name}>
                 <Label htmlFor={field.name}>{field.label}</Label>
@@ -110,7 +108,7 @@ const StockCalculator = () => {
             
             <Button 
               onClick={handleCalculate}
-              className="w-full bg-navy hover:bg-navy/90"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
               Calculate Valuation
             </Button>
@@ -127,7 +125,10 @@ const StockCalculator = () => {
                   <div key={key} className="p-4 bg-gray-50 rounded-lg">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold">
-                        {key.toUpperCase()}
+                        {key === 'pe' ? 'P/E Ratio' :
+                         key === 'pb' ? 'P/B Ratio' :
+                         key === 'ps' ? 'P/S Ratio' :
+                         'PEG Ratio'}
                       </span>
                       <span className="font-mono">
                         {value.toFixed(2)}

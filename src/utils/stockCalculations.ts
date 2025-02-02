@@ -9,28 +9,24 @@ export interface StockMetrics {
   netIncome: number;
   totalAssets: number;
   totalLiabilities: number;
-  ebitda: number;
 }
 
 export interface ValuationRatios {
-  pe: number;
-  pb: number;
-  ps: number;
-  peg: number;
-  evToEbitda: number;
+  pe: number;  // Price to Earnings
+  pb: number;  // Price to Book
+  ps: number;  // Price to Sales
+  peg: number; // Price/Earnings to Growth
 }
 
 export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
   const bookValue = metrics.totalEquity / metrics.outstandingShares;
   const marketCap = metrics.price * metrics.outstandingShares;
-  const enterpriseValue = marketCap + metrics.totalLiabilities - (metrics.totalAssets - metrics.totalLiabilities);
 
   return {
     pe: metrics.price / metrics.eps,
     pb: metrics.price / bookValue,
     ps: marketCap / metrics.totalRevenue,
     peg: (metrics.price / metrics.eps) / ((metrics.netIncome / metrics.totalEquity) * 100),
-    evToEbitda: enterpriseValue / metrics.ebitda
   };
 };
 
@@ -45,5 +41,4 @@ export const industryBenchmarks = {
   pb: 2.5,
   ps: 2.0,
   peg: 1.0,
-  evToEbitda: 12
 };
