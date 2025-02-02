@@ -36,6 +36,21 @@ export const getValuationStatus = (ratio: number, benchmark: number): 'undervalu
   return 'fair';
 };
 
+export const getOverallValuation = (ratios: ValuationRatios): 'undervalued' | 'fair' | 'overvalued' => {
+  let undervaluedCount = 0;
+  let overvaluedCount = 0;
+
+  Object.entries(ratios).forEach(([key, value]) => {
+    const status = getValuationStatus(value, industryBenchmarks[key as keyof ValuationRatios]);
+    if (status === 'undervalued') undervaluedCount++;
+    if (status === 'overvalued') overvaluedCount++;
+  });
+
+  if (undervaluedCount >= 3) return 'undervalued';
+  if (overvaluedCount >= 3) return 'overvalued';
+  return 'fair';
+};
+
 export const industryBenchmarks = {
   pe: 15,
   pb: 2.5,

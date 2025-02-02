@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import {
   StockMetrics,
   ValuationRatios,
   calculateRatios,
   getValuationStatus,
-  industryBenchmarks
+  industryBenchmarks,
+  getOverallValuation
 } from '@/utils/stockCalculations';
 
 const StockCalculator = () => {
@@ -56,6 +58,14 @@ const StockCalculator = () => {
       case 'undervalued': return 'text-green-600';
       case 'overvalued': return 'text-red-600';
       default: return 'text-slate-600';
+    }
+  };
+
+  const getStatusBgColor = (status: string) => {
+    switch (status) {
+      case 'undervalued': return 'bg-green-50';
+      case 'overvalued': return 'bg-red-50';
+      default: return 'bg-gray-50';
     }
   };
 
@@ -118,7 +128,22 @@ const StockCalculator = () => {
         <Card className="p-6">
           <h2 className="text-xl font-semibold mb-4">Valuation Results</h2>
           {ratios ? (
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {metrics.ticker && (
+                <Alert className={getStatusBgColor(getOverallValuation(ratios))}>
+                  <AlertTitle className="text-lg font-semibold">
+                    {metrics.ticker} Stock Analysis
+                  </AlertTitle>
+                  <AlertDescription>
+                    Overall, this stock appears to be{' '}
+                    <span className={getStatusColor(getOverallValuation(ratios))}>
+                      {getOverallValuation(ratios).toUpperCase()}
+                    </span>
+                    {' '}based on multiple valuation metrics.
+                  </AlertDescription>
+                </Alert>
+              )}
+
               {Object.entries(ratios).map(([key, value]) => {
                 const status = getValuationStatus(value, industryBenchmarks[key as keyof ValuationRatios]);
                 return (
@@ -139,6 +164,12 @@ const StockCalculator = () => {
                       <span className={getStatusColor(status)}>
                         {status.charAt(0).toUpperCase() + status.slice(1)}
                       </span>
+                    </div>
+                    <div className="mt-2 text-sm text-gray-600">
+                      {key === 'pe' && 'Lower P/E suggests better value, comparing company\'s price to its earnings.'}
+                      {key === 'pb' && 'Lower P/B suggests the stock might be undervalued relative to its book value.'}
+                      {key === 'ps' && 'Lower P/S indicates you\'re paying less for each rupee of sales.'}
+                      {key === 'peg' && 'PEG below 1 typically suggests undervaluation considering growth.'}
                     </div>
                   </div>
                 );
