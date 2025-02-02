@@ -153,6 +153,7 @@ const StockCalculator = () => {
                         {key === 'pe' ? 'P/E Ratio' :
                          key === 'pb' ? 'P/B Ratio' :
                          key === 'ps' ? 'P/S Ratio' :
+                         key === 'nav' ? 'NAV per Share' :
                          'PEG Ratio'}
                       </span>
                       <span className="font-mono">
@@ -170,6 +171,7 @@ const StockCalculator = () => {
                       {key === 'pb' && 'Lower P/B suggests the stock might be undervalued relative to its book value.'}
                       {key === 'ps' && 'Lower P/S indicates you\'re paying less for each rupee of sales.'}
                       {key === 'peg' && 'PEG below 1 typically suggests undervaluation considering growth.'}
+                      {key === 'nav' && 'NAV per share represents the net value of assets per share. Price below NAV might indicate undervaluation.'}
                     </div>
                   </div>
                 );

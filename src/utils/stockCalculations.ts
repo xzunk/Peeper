@@ -16,17 +16,20 @@ export interface ValuationRatios {
   pb: number;  // Price to Book
   ps: number;  // Price to Sales
   peg: number; // Price/Earnings to Growth
+  nav: number; // Net Asset Value per Share
 }
 
 export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
   const bookValue = metrics.totalEquity / metrics.outstandingShares;
   const marketCap = metrics.price * metrics.outstandingShares;
+  const nav = (metrics.totalAssets - metrics.totalLiabilities) / metrics.outstandingShares;
 
   return {
     pe: metrics.price / metrics.eps,
     pb: metrics.price / bookValue,
     ps: marketCap / metrics.totalRevenue,
     peg: (metrics.price / metrics.eps) / ((metrics.netIncome / metrics.totalEquity) * 100),
+    nav: nav
   };
 };
 
@@ -56,4 +59,5 @@ export const industryBenchmarks = {
   pb: 2.5,
   ps: 2.0,
   peg: 1.0,
+  nav: 1.2, // Price to NAV benchmark
 };
