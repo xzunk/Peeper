@@ -71,12 +71,13 @@ const StockCalculator = () => {
   return (
     <div className="container mx-auto px-4 max-w-7xl">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-navy">
-        Stock Valuation Calculator (LKR)
+        Stock Valuation Calculator
       </h1>
       
       <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
         <Card className="p-4 md:p-6 shadow-sm">
           <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Input Financial Data</h2>
+          <p className="text-lg md:text-xl font-semibold mb-4 text-navy">Use the annual reports of selected companies as a source of data collection. </p>
           <div className="space-y-4">
             <div>
               <Label htmlFor="ticker">Stock Ticker</Label>
@@ -91,14 +92,14 @@ const StockCalculator = () => {
             </div>
             
             {[
-              { label: 'Stock Price (LKR)', name: 'price' },
-              { label: 'Earnings Per Share (LKR)', name: 'eps' },
-              { label: 'Total Equity (LKR Mn)', name: 'totalEquity' },
-              { label: 'Total Revenue (LKR Mn)', name: 'totalRevenue' },
+              { label: 'Stock Price ', name: 'price' },
+              { label: 'Earnings Per Share ', name: 'eps' },
+              { label: 'Total Equity (Mn)', name: 'totalEquity' },
+              { label: 'Total Revenue (Mn)', name: 'totalRevenue' },
               { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' },
-              { label: 'Net Income (LKR Mn)', name: 'netIncome' },
-              { label: 'Total Assets (LKR Mn)', name: 'totalAssets' },
-              { label: 'Total Liabilities (LKR Mn)', name: 'totalLiabilities' }
+              { label: 'Net Income (Mn)', name: 'netIncome' },
+              { label: 'Total Assets (Mn)', name: 'totalAssets' },
+              { label: 'Total Liabilities (Mn)', name: 'totalLiabilities' }
             ].map(field => (
               <div key={field.name} className="space-y-1.5">
                 <Label htmlFor={field.name}>{field.label}</Label>
@@ -203,7 +204,7 @@ const StockCalculator = () => {
           <div className="text-left">
             <h3 className="font-semibold text-navy mb-2">About</h3>
             <p className="text-sm text-gray-600">
-              A comprehensive stock valuation tool for the Sri Lankan market, helping investors make informed decisions.
+             Peeper is A comprehensive stock valuation tool for the Global Stock markets, helping investors make informed decisions.
             </p>
           </div>
           <div className="text-left">
@@ -220,7 +221,7 @@ const StockCalculator = () => {
           </div>
         </div>
         <div className="text-center mt-8 text-sm text-gray-500">
-          © {new Date().getFullYear()} Stock Valuation Calculator. All rights reserved.
+          © {new Date().getFullYear()} Peeper| Backed by CosmoETSP. All rights reserved.
         </div>
       </footer>
     </div>
