@@ -74,14 +74,7 @@ const StockCalculator = () => {
         Stock Valuation Calculator (LKR)
       </h1>
       
-      {/* Ad Space */}
-      <div className="w-full flex justify-center mb-8">
-        <div className="bg-gray-100 w-[320px] h-[250px] flex items-center justify-center text-gray-400 border border-gray-200 rounded-lg">
-          Advertisement Space (320x250)
-        </div>
-      </div>
-      
-      <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+      <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
         <Card className="p-4 md:p-6 shadow-sm">
           <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Input Financial Data</h2>
           <div className="space-y-4">
@@ -193,6 +186,40 @@ const StockCalculator = () => {
           )}
         </Card>
       </div>
+
+      {/* Ad Space moved to bottom */}
+      <div className="w-full flex justify-center mb-8">
+        <div className="bg-gray-100 w-[320px] h-[250px] flex items-center justify-center text-gray-400 border border-gray-200 rounded-lg">
+          Advertisement Space (320x250)
+        </div>
+      </div>
+
+      {/* Footer Section */}
+      <footer className="border-t border-gray-200 pt-8 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-left">
+            <h3 className="font-semibold text-navy mb-2">About</h3>
+            <p className="text-sm text-gray-600">
+              A comprehensive stock valuation tool for the Sri Lankan market, helping investors make informed decisions.
+            </p>
+          </div>
+          <div className="text-left">
+            <h3 className="font-semibold text-navy mb-2">Disclaimer</h3>
+            <p className="text-sm text-gray-600">
+              This calculator provides estimates based on financial data. Always conduct thorough research before making investment decisions.
+            </p>
+          </div>
+          <div className="text-left">
+            <h3 className="font-semibold text-navy mb-2">Contact</h3>
+            <p className="text-sm text-gray-600">
+              For support or inquiries, please visit our contact page or email support@stockvaluation.lk
+            </p>
+          </div>
+        </div>
+        <div className="text-center mt-8 text-sm text-gray-500">
+          © {new Date().getFullYear()} Stock Valuation Calculator. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 };
