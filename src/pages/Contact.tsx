@@ -7,7 +7,7 @@ const Contact = () => {
         
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-          <p className="mb-4">Email: support@stockvaluationcalculator.com</p>
+          <p className="mb-4">Email:cs@cosmo.com.lk </p>
           <p className="mb-4">Response Time: Within 24-48 hours</p>
           
           <div className="mt-6">
