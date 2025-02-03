@@ -204,7 +204,7 @@ const StockCalculator = () => {
           <div className="text-left">
             <h3 className="font-semibold text-navy mb-2">About</h3>
             <p className="text-sm text-gray-600">
-             Peeper is A comprehensive stock valuation tool for the Global Stock markets, helping investors make informed decisions.
+             Peeper is A comprehensive stock valuation tool for the Global Stock markets, (Find PBV/NAV/PE) helping investors make informed decisions.
             </p>
           </div>
           <div className="text-left">
