@@ -96,7 +96,6 @@ const StockCalculator = () => {
               { label: 'Earnings Per Share (LKR)', name: 'eps' },
               { label: 'Total Equity (LKR Mn)', name: 'totalEquity' },
               { label: 'Total Revenue (LKR Mn)', name: 'totalRevenue' },
-           
               { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' },
               { label: 'Net Income (LKR Mn)', name: 'netIncome' },
               { label: 'Total Assets (LKR Mn)', name: 'totalAssets' },

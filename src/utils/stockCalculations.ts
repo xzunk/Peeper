@@ -4,7 +4,6 @@ export interface StockMetrics {
   eps: number;
   totalEquity: number;
   totalRevenue: number;
- 
   outstandingShares: number;
   netIncome: number;
   totalAssets: number;
@@ -12,11 +11,11 @@ export interface StockMetrics {
 }
 
 export interface ValuationRatios {
-  pe: number;  // Price to Earnings
-  pb: number;  // Price to Book
-  ps: number;  // Price to Sales
-  peg: number; // Price/Earnings to Growth
-  nav: number; // Net Asset Value per Share
+  pe: number;
+  pb: number;
+  ps: number;
+  peg: number;
+  nav: number;
 }
 
 export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
@@ -59,5 +58,5 @@ export const industryBenchmarks = {
   pb: 2.5,
   ps: 2.0,
   peg: 1.0,
-  nav: ,
+  nav: 1.0,
 };
