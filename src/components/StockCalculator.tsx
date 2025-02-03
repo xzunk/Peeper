@@ -69,14 +69,21 @@ const StockCalculator = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8 text-center">
+    <div className="container mx-auto px-4 max-w-7xl">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-navy">
         Stock Valuation Calculator (LKR)
       </h1>
       
-      <div className="grid md:grid-cols-2 gap-8">
-        <Card className="p-6">
-          <h2 className="text-xl font-semibold mb-4">Input Financial Data</h2>
+      {/* Ad Space */}
+      <div className="w-full flex justify-center mb-8">
+        <div className="bg-gray-100 w-[320px] h-[250px] flex items-center justify-center text-gray-400 border border-gray-200 rounded-lg">
+          Advertisement Space (320x250)
+        </div>
+      </div>
+      
+      <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+        <Card className="p-4 md:p-6 shadow-sm">
+          <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Input Financial Data</h2>
           <div className="space-y-4">
             <div>
               <Label htmlFor="ticker">Stock Ticker</Label>
@@ -100,7 +107,7 @@ const StockCalculator = () => {
               { label: 'Total Assets (LKR Mn)', name: 'totalAssets' },
               { label: 'Total Liabilities (LKR Mn)', name: 'totalLiabilities' }
             ].map(field => (
-              <div key={field.name}>
+              <div key={field.name} className="space-y-1.5">
                 <Label htmlFor={field.name}>{field.label}</Label>
                 <Input
                   id={field.name}
@@ -116,25 +123,29 @@ const StockCalculator = () => {
             
             <Button 
               onClick={handleCalculate}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
             >
               Calculate Valuation
             </Button>
           </div>
         </Card>
 
-        <Card className="p-6">
-          <h2 className="text-xl font-semibold mb-4">Valuation Results</h2>
+        <Card className="p-4 md:p-6 shadow-sm">
+          <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Valuation Results</h2>
           {ratios ? (
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {metrics.ticker && (
-                <Alert className={getStatusBgColor(getOverallValuation(ratios))}>
+                <Alert className={`${getStatusBgColor(getOverallValuation(ratios))} border-l-4 ${
+                  getOverallValuation(ratios) === 'undervalued' ? 'border-l-green-500' : 
+                  getOverallValuation(ratios) === 'overvalued' ? 'border-l-red-500' : 
+                  'border-l-gray-500'
+                }`}>
                   <AlertTitle className="text-lg font-semibold">
                     {metrics.ticker} Stock Analysis
                   </AlertTitle>
-                  <AlertDescription>
+                  <AlertDescription className="mt-2">
                     Overall, this stock appears to be{' '}
-                    <span className={getStatusColor(getOverallValuation(ratios))}>
+                    <span className={`font-semibold ${getStatusColor(getOverallValuation(ratios))}`}>
                       {getOverallValuation(ratios).toUpperCase()}
                     </span>
                     {' '}based on multiple valuation metrics.
@@ -145,22 +156,22 @@ const StockCalculator = () => {
               {Object.entries(ratios).map(([key, value]) => {
                 const status = getValuationStatus(value, industryBenchmarks[key as keyof ValuationRatios]);
                 return (
-                  <div key={key} className="p-4 bg-gray-50 rounded-lg">
+                  <div key={key} className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold">
+                      <span className="font-semibold text-navy">
                         {key === 'pe' ? 'P/E Ratio' :
                          key === 'pb' ? 'P/B Ratio' :
                          key === 'ps' ? 'P/S Ratio' :
                          key === 'nav' ? 'NAV per Share' :
                          'PEG Ratio'}
                       </span>
-                      <span className="font-mono">
+                      <span className="font-mono text-lg">
                         {value.toFixed(2)}
                       </span>
                     </div>
                     <div className="mt-2 flex justify-between items-center text-sm">
-                      <span>Industry Avg: {industryBenchmarks[key as keyof ValuationRatios]}</span>
-                      <span className={getStatusColor(status)}>
+                      <span className="text-gray-600">Industry Avg: {industryBenchmarks[key as keyof ValuationRatios]}</span>
+                      <span className={`${getStatusColor(status)} font-medium`}>
                         {status.charAt(0).toUpperCase() + status.slice(1)}
                       </span>
                     </div>
