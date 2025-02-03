@@ -22,7 +22,6 @@ const StockCalculator = () => {
     eps: 0,
     totalEquity: 0,
     totalRevenue: 0,
-    operatingCashFlow: 0,
     outstandingShares: 0,
     netIncome: 0,
     totalAssets: 0,
