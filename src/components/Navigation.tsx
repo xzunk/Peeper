@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FileText, Mail, Menu } from "lucide-react";
+import { FileText, Mail, Menu, X } from "lucide-react";
 
 const Navigation = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    console.log('Mobile menu toggled:', !isMenuOpen);
+  };
+
   return (
     <nav className="bg-white shadow-sm">
       <div className="container mx-auto px-4">
@@ -25,10 +33,48 @@ const Navigation = () => {
             </Link>
           </div>
           
-          <button className="md:hidden">
-            <Menu className="w-6 h-6" />
+          <button 
+            onClick={toggleMenu}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <X className="w-6 h-6 text-slate" />
+            ) : (
+              <Menu className="w-6 h-6 text-slate" />
+            )}
           </button>
         </div>
+
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="md:hidden py-4 space-y-4">
+            <Link 
+              to="/terms" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <FileText className="w-4 h-4 mr-1" />
+              Terms
+            </Link>
+            <Link 
+              to="/privacy" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <FileText className="w-4 h-4 mr-1" />
+              Privacy
+            </Link>
+            <Link 
+              to="/contact" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Mail className="w-4 h-4 mr-1" />
+              Contact
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

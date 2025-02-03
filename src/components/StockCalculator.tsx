@@ -73,13 +73,6 @@ const StockCalculator = () => {
       <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-navy">
         Stock Valuation Calculator (LKR)
       </h1>
-
-      {/* Top Ad Space */}
-      <div className="w-full flex justify-center mb-8">
-        <div className="bg-gray-100 w-[320px] h-[250px] flex items-center justify-center text-gray-400 border border-gray-200 rounded-lg">
-          Advertisement Space (320x250)
-        </div>
-      </div>
       
       <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
         <Card className="p-4 md:p-6 shadow-sm">
@@ -194,8 +187,11 @@ const StockCalculator = () => {
         </Card>
       </div>
 
-      {/* Bottom Ad Space */}
-      <div className="w-full flex justify-center mb-8">
+      {/* Combined Ad Space */}
+      <div className="w-full flex flex-col md:flex-row justify-center gap-8 mb-8">
+        <div className="bg-gray-100 w-[320px] h-[250px] flex items-center justify-center text-gray-400 border border-gray-200 rounded-lg">
+          Advertisement Space (320x250)
+        </div>
         <div className="bg-gray-100 w-[320px] h-[250px] flex items-center justify-center text-gray-400 border border-gray-200 rounded-lg">
           Advertisement Space (320x250)
         </div>
