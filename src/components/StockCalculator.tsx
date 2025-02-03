@@ -77,7 +77,7 @@ const StockCalculator = () => {
       <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
         <Card className="p-4 md:p-6 shadow-sm">
           <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Input Financial Data</h2>
-          <p className="text-lg md:text-xl font-semibold mb-4 text-navy">Use the annual reports of selected companies as a source of data collection. </p>
+          <p className="mb-4">Use the annual reports of selected companies as a source of data collection. </p>
           <div className="space-y-4">
             <div>
               <Label htmlFor="ticker">Stock Ticker</Label>
