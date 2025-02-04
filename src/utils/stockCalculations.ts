@@ -6,6 +6,7 @@ export interface StockMetrics {
   netIncome: number;
   totalEquity: number;
   outstandingShares: number;
+  growthRate?: number;
 }
 
 export interface ValuationRatios {
@@ -14,20 +15,34 @@ export interface ValuationRatios {
   ps: number;
   roe: number;
   profitMargin: number;
+  peg: number;
 }
 
 export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
   const bookValue = metrics.totalEquity / metrics.outstandingShares;
   const marketCap = metrics.price * metrics.outstandingShares;
+  const pe = metrics.price / metrics.eps;
   
   return {
-    pe: metrics.price / metrics.eps,
+    pe,
     pb: metrics.price / bookValue,
     ps: marketCap / metrics.totalRevenue,
     roe: (metrics.netIncome / metrics.totalEquity) * 100,
-    profitMargin: (metrics.netIncome / metrics.totalRevenue) * 100
+    profitMargin: (metrics.netIncome / metrics.totalRevenue) * 100,
+    peg: pe / (metrics.growthRate || 1)
   };
 };
+
+export const industryBenchmarks = {
+  pe: 15,
+  pb: 2.5,
+  ps: 2.0,
+  roe: 15,
+  profitMargin: 10,
+  peg: 1.0
+};
+
+
 
 export const getValuationStatus = (ratio: number, benchmark: number): 'undervalued' | 'fair' | 'overvalued' => {
   if (ratio < benchmark * 0.8) return 'undervalued';
@@ -48,14 +63,6 @@ export const getOverallValuation = (ratios: ValuationRatios): 'undervalued' | 'f
   if (undervaluedCount >= 3) return 'undervalued';
   if (overvaluedCount >= 3) return 'overvalued';
   return 'fair';
-};
-
-export const industryBenchmarks = {
-  pe: 15,
-  pb: 2.5,
-  ps: 2.0,
-  roe: 15,
-  profitMargin: 10
 };
 
 // Function to handle float numbers in input parsing
