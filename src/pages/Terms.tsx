@@ -15,6 +15,9 @@ const Terms = () => {
           
           <h2 className="text-2xl font-semibold mt-8 mb-4">4. Data Accuracy</h2>
           <p className="mb-4">Users are responsible for inputting accurate data. The calculator's results depend on the accuracy of input data.</p>
+           <h2 className="text-2xl font-semibold mt-8 mb-4">4. Data Privacy</h2>
+          <p className="mb-4">We do not use any database to save user data, we use local storage as temporary memory.</p>
+        </div>
         </div>
       </div>
     </div>
