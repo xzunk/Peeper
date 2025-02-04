@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ import {
   parseNumberInput
 } from '@/utils/stockCalculations';
 
+const STORAGE_KEY = 'stockCalculatorData';
+
 const StockCalculator = () => {
   const { toast } = useToast();
   const [metrics, setMetrics] = useState<StockMetrics>({
@@ -25,9 +27,21 @@ const StockCalculator = () => {
     netIncome: 0,
     totalEquity: 0,
     outstandingShares: 0,
-    growthRate: 0
   });
   const [ratios, setRatios] = useState<ValuationRatios | null>(null);
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      setMetrics(JSON.parse(savedData));
+    }
+  }, []);
+
+  // Save data to localStorage whenever metrics change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(metrics));
+  }, [metrics]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,6 +64,25 @@ const StockCalculator = () => {
     const calculatedRatios = calculateRatios(metrics);
     setRatios(calculatedRatios);
     console.log('Calculated ratios:', calculatedRatios);
+  };
+
+  const handleClear = () => {
+    const clearedMetrics = {
+      ticker: '',
+      price: 0,
+      eps: 0,
+      totalRevenue: 0,
+      netIncome: 0,
+      totalEquity: 0,
+      outstandingShares: 0,
+    };
+    setMetrics(clearedMetrics);
+    setRatios(null);
+    localStorage.removeItem(STORAGE_KEY);
+    toast({
+      title: "Data Cleared",
+      description: "All input fields have been reset.",
+    });
   };
 
   const getStatusColor = (status: string) => {
@@ -76,7 +109,16 @@ const StockCalculator = () => {
       
       <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
         <Card className="p-4 md:p-6 shadow-sm">
-          <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Input Financial Data</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg md:text-xl font-semibold text-navy">Input Financial Data</h2>
+            <Button 
+              onClick={handleClear}
+              variant="outline"
+              className="text-red-600 hover:text-red-700"
+            >
+              Clear All
+            </Button>
+          </div>
           <p className="mb-4">Enter the following key metrics from the company's annual report:</p>
           <div className="space-y-4">
             <div>
@@ -97,8 +139,7 @@ const StockCalculator = () => {
               { label: 'Total Revenue (Mn)', name: 'totalRevenue' },
               { label: 'Net Income (Mn)', name: 'netIncome' },
               { label: 'Total Equity (Mn)', name: 'totalEquity' },
-              { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' },
-              { label: 'Growth Rate (%)', name: 'growthRate', hint: 'Annual EPS growth rate' }
+              { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' }
             ].map(field => (
               <div key={field.name} className="space-y-1.5">
                 <Label htmlFor={field.name}>{field.label}</Label>
@@ -111,9 +152,6 @@ const StockCalculator = () => {
                   className="font-mono"
                   placeholder="0"
                 />
-                {field.hint && (
-                  <p className="text-sm text-gray-500 mt-1">{field.hint}</p>
-                )}
               </div>
             ))}
             
@@ -190,9 +228,9 @@ const StockCalculator = () => {
             </div>
           )}
         </Card>
+
       </div>
 
-      {/* Footer Section */}
       <footer className="border-t border-gray-200 pt-8 pb-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-left">
