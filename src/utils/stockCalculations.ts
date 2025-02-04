@@ -6,6 +6,7 @@ export interface StockMetrics {
   netIncome: number;
   totalEquity: number;
   outstandingShares: number;
+  growthRate: number; // Added for PEG calculation
 }
 
 export interface ValuationRatios {
@@ -14,6 +15,7 @@ export interface ValuationRatios {
   ps: number;
   roe: number;
   profitMargin: number;
+  peg: number; // Added PEG ratio
 }
 
 export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
@@ -25,7 +27,8 @@ export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
     pb: metrics.price / bookValue,
     ps: marketCap / metrics.totalRevenue,
     roe: (metrics.netIncome / metrics.totalEquity) * 100,
-    profitMargin: (metrics.netIncome / metrics.totalRevenue) * 100
+    profitMargin: (metrics.netIncome / metrics.totalRevenue) * 100,
+    peg: (metrics.price / metrics.eps) / metrics.growthRate
   };
 };
 
@@ -55,5 +58,13 @@ export const industryBenchmarks = {
   pb: 2.5,
   ps: 2.0,
   roe: 15,
-  profitMargin: 10
+  profitMargin: 10,
+  peg: 1.0 // Added PEG benchmark
+};
+
+// Helper function to parse number inputs
+export const parseNumberInput = (value: string): number => {
+  // Remove commas and leading zeros
+  const cleanValue = value.replace(/,/g, '').replace(/^0+/, '');
+  return cleanValue === '' ? 0 : Number(cleanValue);
 };

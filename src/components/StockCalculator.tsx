@@ -11,7 +11,8 @@ import {
   calculateRatios,
   getValuationStatus,
   industryBenchmarks,
-  getOverallValuation
+  getOverallValuation,
+  parseNumberInput
 } from '@/utils/stockCalculations';
 
 const StockCalculator = () => {
@@ -23,7 +24,8 @@ const StockCalculator = () => {
     totalRevenue: 0,
     netIncome: 0,
     totalEquity: 0,
-    outstandingShares: 0
+    outstandingShares: 0,
+    growthRate: 0
   });
   const [ratios, setRatios] = useState<ValuationRatios | null>(null);
 
@@ -31,7 +33,7 @@ const StockCalculator = () => {
     const { name, value } = e.target;
     setMetrics(prev => ({
       ...prev,
-      [name]: name === 'ticker' ? value : Number(value)
+      [name]: name === 'ticker' ? value : parseNumberInput(value)
     }));
   };
 
@@ -90,24 +92,28 @@ const StockCalculator = () => {
             </div>
             
             {[
-              { label: 'Current Stock Price', name: 'price' },
-              { label: 'Earnings Per Share (EPS)', name: 'eps' },
+              { label: 'Current Stock Price ($)', name: 'price' },
+              { label: 'Earnings Per Share - EPS ($)', name: 'eps' },
               { label: 'Total Revenue (Mn)', name: 'totalRevenue' },
               { label: 'Net Income (Mn)', name: 'netIncome' },
               { label: 'Total Equity (Mn)', name: 'totalEquity' },
-              { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' }
+              { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' },
+              { label: 'Growth Rate (%)', name: 'growthRate', hint: 'Annual EPS growth rate' }
             ].map(field => (
               <div key={field.name} className="space-y-1.5">
                 <Label htmlFor={field.name}>{field.label}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
-                  type="number"
+                  type="text"
                   value={metrics[field.name as keyof StockMetrics] || ''}
                   onChange={handleInputChange}
                   className="font-mono"
-                  step="0.01"
+                  placeholder="0"
                 />
+                {field.hint && (
+                  <p className="text-sm text-gray-500 mt-1">{field.hint}</p>
+                )}
               </div>
             ))}
             
@@ -129,13 +135,13 @@ const StockCalculator = () => {
                   getOverallValuation(ratios) === 'undervalued' ? 'border-l-green-500' : 
                   getOverallValuation(ratios) === 'overvalued' ? 'border-l-red-500' : 
                   'border-l-gray-500'
-                }`}>
+                } animate-fade-in`}>
                   <AlertTitle className="text-lg font-semibold">
                     {metrics.ticker} Stock Analysis
                   </AlertTitle>
                   <AlertDescription className="mt-2">
                     Overall, this stock appears to be{' '}
-                    <span className={`font-semibold ${getStatusColor(getOverallValuation(ratios))}`}>
+                    <span className={`font-semibold ${getStatusColor(getOverallValuation(ratios))} animate-pulse`}>
                       {getOverallValuation(ratios).toUpperCase()}
                     </span>
                     {' '}based on multiple valuation metrics.
@@ -146,12 +152,13 @@ const StockCalculator = () => {
               {Object.entries(ratios).map(([key, value]) => {
                 const status = getValuationStatus(value, industryBenchmarks[key as keyof ValuationRatios]);
                 return (
-                  <div key={key} className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div key={key} className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors animate-fade-in">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-navy">
                         {key === 'pe' ? 'P/E Ratio' :
                          key === 'pb' ? 'P/B Ratio' :
                          key === 'ps' ? 'P/S Ratio' :
+                         key === 'peg' ? 'PEG Ratio' :
                          key === 'roe' ? 'Return on Equity (%)' :
                          'Profit Margin (%)'}
                       </span>
@@ -169,6 +176,7 @@ const StockCalculator = () => {
                       {key === 'pe' && 'Lower P/E suggests better value, comparing price to earnings.'}
                       {key === 'pb' && 'Lower P/B suggests the stock might be undervalued relative to book value.'}
                       {key === 'ps' && 'Lower P/S indicates you\'re paying less for each dollar of sales.'}
+                      {key === 'peg' && 'PEG < 1 suggests the stock might be undervalued given its growth rate.'}
                       {key === 'roe' && 'Higher ROE indicates better efficiency in generating profits from equity.'}
                       {key === 'profitMargin' && 'Higher profit margin indicates better operational efficiency.'}
                     </div>
