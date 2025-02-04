@@ -261,7 +261,7 @@ const DividendTracker = () => {
             </div>
           ) : (
             <div className="text-center text-gray-500 py-8">
-              Enter your dividend stocks and calculate to see income summary. You Can Find Beta Value From Stock Exchage Website!
+              Enter your dividend stocks and calculate to see income summary. 
             </div>
           )}
         </Card>
