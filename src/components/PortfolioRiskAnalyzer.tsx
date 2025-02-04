@@ -48,14 +48,17 @@ const PortfolioRiskAnalyzer = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stocks));
   }, [stocks]);
 
-  const handleInputChange = (index: number, field: keyof PortfolioStock, value: string) => {
-    const newStocks = [...stocks];
-    newStocks[index] = {
-      ...newStocks[index],
-      [field]: field === 'ticker' ? value : Number(parseNumberInput(value)) || 0
-    };
-    setStocks(newStocks);
+ const handleInputChange = (index: number, field: keyof PortfolioStock, value: string) => {
+  const newStocks = [...stocks];
+
+  newStocks[index] = {
+    ...newStocks[index],
+    [field]: field === 'ticker' ? value : value // Store as string to preserve decimal input
   };
+
+  setStocks(newStocks);
+};
+
 
   const addStock = () => {
     setStocks([...stocks, { ticker: '', allocation: 0, beta: 0 }]);
@@ -84,10 +87,11 @@ const PortfolioRiskAnalyzer = () => {
     }
 
     const weightedBeta = stocks.reduce((sum, stock) => {
-      const allocation = Number(stock.allocation) || 0;
-      const beta = Number(stock.beta) || 0;
-      return sum + (beta * (allocation / 100));
-    }, 0);
+  const allocation = Number(stock.allocation) || 0;
+  const beta = parseFloat(stock.beta as unknown as string) || 0; // Ensure conversion here
+  return sum + (beta * (allocation / 100));
+}, 0);
+
 
     let riskLevel = 'Moderate';
     if (weightedBeta < 0.8) riskLevel = 'Low';
