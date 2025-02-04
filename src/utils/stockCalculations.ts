@@ -6,7 +6,7 @@ export interface StockMetrics {
   netIncome: number;
   totalEquity: number;
   outstandingShares: number;
-  growthRate?: number;
+
 }
 
 export interface ValuationRatios {
@@ -22,6 +22,7 @@ export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
   const bookValue = metrics.totalEquity / metrics.outstandingShares;
   const marketCap = metrics.price * metrics.outstandingShares;
   const pe = metrics.price / metrics.eps;
+   const defaultGrowthRate = 10; // Using industry average growth rate
   
   return {
     pe,
@@ -29,7 +30,7 @@ export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
     ps: marketCap / metrics.totalRevenue,
     roe: (metrics.netIncome / metrics.totalEquity) * 100,
     profitMargin: (metrics.netIncome / metrics.totalRevenue) * 100,
-    peg: pe / (metrics.growthRate || 1)
+    peg: pe / defaultGrowthRate
   };
 };
 
