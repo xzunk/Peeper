@@ -28,7 +28,19 @@ const PortfolioRiskAnalyzer = () => {
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY);
     if (savedData) {
-      setStocks(JSON.parse(savedData));
+      try {
+        const parsedData = JSON.parse(savedData);
+        // Ensure all numerical values are properly initialized
+        const validatedData = parsedData.map((stock: PortfolioStock) => ({
+          ...stock,
+          allocation: Number(stock.allocation) || 0,
+          beta: Number(stock.beta) || 0
+        }));
+        setStocks(validatedData);
+      } catch (e) {
+        console.error('Error parsing saved data:', e);
+        localStorage.removeItem(STORAGE_KEY);
+      }
     }
   }, []);
 
@@ -40,7 +52,7 @@ const PortfolioRiskAnalyzer = () => {
     const newStocks = [...stocks];
     newStocks[index] = {
       ...newStocks[index],
-      [field]: field === 'ticker' ? value : parseNumberInput(value)
+      [field]: field === 'ticker' ? value : Number(parseNumberInput(value)) || 0
     };
     setStocks(newStocks);
   };
@@ -57,22 +69,24 @@ const PortfolioRiskAnalyzer = () => {
   };
 
   const calculateRisk = () => {
-            // Calculate total allocation with higher precision
-    const totalAllocation = stocks.reduce((sum, stock) => sum + (stock.allocation || 0), 0);
+    // Calculate total allocation with higher precision
+    const totalAllocation = stocks.reduce((sum, stock) => sum + (Number(stock.allocation) || 0), 0);
     
     // Use a small epsilon value for floating-point comparison
     const epsilon = 0.0001;
     if (Math.abs(totalAllocation - 100) > epsilon) {
       toast({
         title: "Validation Error",
-        description: `Total allocation must equal 100%. Current total: ${totalAllocation.toFixed(2)}%`,
+        description: `Total allocation must equal 100%. Current total: ${Number(totalAllocation).toFixed(2)}%`,
         variant: "destructive"
       });
       return;
     }
 
     const weightedBeta = stocks.reduce((sum, stock) => {
-      return sum + (stock.beta * (stock.allocation / 100));
+      const allocation = Number(stock.allocation) || 0;
+      const beta = Number(stock.beta) || 0;
+      return sum + (beta * (allocation / 100));
     }, 0);
 
     let riskLevel = 'Moderate';
@@ -80,7 +94,7 @@ const PortfolioRiskAnalyzer = () => {
     else if (weightedBeta > 1.2) riskLevel = 'High';
 
     setPortfolioRisk({
-      totalBeta: weightedBeta,
+      totalBeta: Number(weightedBeta),
       riskLevel
     });
   };
@@ -220,6 +234,7 @@ const PortfolioRiskAnalyzer = () => {
       </div>
     </div>
   );
+
 };
 
 export default PortfolioRiskAnalyzer;
