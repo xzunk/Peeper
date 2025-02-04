@@ -134,8 +134,8 @@ const StockCalculator = () => {
             </div>
             
             {[
-              { label: 'Current Stock Price ($)', name: 'price' },
-              { label: 'Earnings Per Share - EPS ($)', name: 'eps' },
+              { label: 'Current Stock Price ', name: 'price' },
+              { label: 'Earnings Per Share - EPS ', name: 'eps' },
               { label: 'Total Revenue (Mn)', name: 'totalRevenue' },
               { label: 'Net Income (Mn)', name: 'netIncome' },
               { label: 'Total Equity (Mn)', name: 'totalEquity' },
