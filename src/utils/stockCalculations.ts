@@ -69,7 +69,6 @@ float
  
 numbers
 
-export const parseNumberInput = (value: string): number => {
 
 export const parseNumberInput = (value: string): number => {
 
