@@ -58,59 +58,17 @@ export const industryBenchmarks = {
   profitMargin: 10
 };
 
-// 
-Updated
- 
-parseNumberInput 
-function to 
-handle
- 
-float
- 
-numbers
-
+// Function to handle float numbers in input parsing
 export const parseNumberInput = (value: string): number => {
-
-export const parseNumberInput = (value: string): number => {
-
-  // Remove 
-commas and 
-leading zeros
-
-  // Remove 
-all 
-commas and 
-spaces
-
-  const cleanValue = value.replace(
-/,/
-g, '')
-.replace(/^0+/, '')
-;
-
-  const cleanValue = value.replace(
-/,|\s/
-g, '')
-;
-
-  
-return cleanValue === '' ? 0 : Number(cleanValue);
-
-  
+  // Remove all commas and spaces
+  const cleanValue = value.replace(/,|\s/g, '');
 
   // Check if it's a valid number (including decimals)
-
   if (!/^-?\d*\.?\d*$/.test(cleanValue)) return 0;
 
-  
-
   // Convert to number, handling both integer and float
-
   const parsedValue = parseFloat(cleanValue);
 
-  
-
   // Return 0 if NaN, otherwise return the parsed value
-
   return isNaN(parsedValue) ? 0 : parsedValue;
 };
