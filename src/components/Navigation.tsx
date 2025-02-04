@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Calculator, FileText, Mail, Menu, X } from "lucide-react";
+import { Calculator, FileText, Mail, Menu, X, PieChart, DollarSign } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,6 +25,14 @@ const Navigation = () => {
             <Link to="/profit" className="flex items-center text-slate hover:text-navy">
               <Calculator className="w-4 h-4 mr-1" />
               Profit Calculator
+            </Link>
+            <Link to="/portfolio" className="flex items-center text-slate hover:text-navy">
+              <PieChart className="w-4 h-4 mr-1" />
+              Portfolio Risk
+            </Link>
+            <Link to="/dividend" className="flex items-center text-slate hover:text-navy">
+              <DollarSign className="w-4 h-4 mr-1" />
+              Dividend Tracker
             </Link>
             <Link to="/terms" className="flex items-center text-slate hover:text-navy">
               <FileText className="w-4 h-4 mr-1" />
@@ -70,6 +78,22 @@ const Navigation = () => {
             >
               <Calculator className="w-4 h-4 mr-1" />
               Profit Calculator
+            </Link>
+            <Link 
+              to="/portfolio" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <PieChart className="w-4 h-4 mr-1" />
+              Portfolio Risk
+            </Link>
+            <Link 
+              to="/dividend" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <DollarSign className="w-4 h-4 mr-1" />
+              Dividend Tracker
             </Link>
             <Link 
               to="/terms" 

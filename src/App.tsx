@@ -10,6 +10,8 @@ import Privacy from "./pages/Privacy";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
+import PortfolioRiskAnalyzer from "./components/PortfolioRiskAnalyzer";
+import DividendTracker from "./components/DividendTracker";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/profit" element={<Profit />} />
+          <Route path="/portfolio" element={<PortfolioRiskAnalyzer />} />
+          <Route path="/dividend" element={<DividendTracker />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/contact" element={<Contact />} />
