@@ -231,7 +231,7 @@ const PortfolioRiskAnalyzer = () => {
             </div>
           ) : (
             <div className="text-center text-gray-500 py-8">
-              Enter your portfolio details and calculate to see risk analysis
+              Enter your portfolio details and calculate to see risk analysis. You Can Find Beta Value From Stock Exchage Website!
             </div>
           )}
         </Card>
