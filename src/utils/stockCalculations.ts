@@ -2,33 +2,30 @@ export interface StockMetrics {
   ticker: string;
   price: number;
   eps: number;
-  totalEquity: number;
   totalRevenue: number;
-  outstandingShares: number;
   netIncome: number;
-  totalAssets: number;
-  totalLiabilities: number;
+  totalEquity: number;
+  outstandingShares: number;
 }
 
 export interface ValuationRatios {
   pe: number;
   pb: number;
   ps: number;
-  peg: number;
-  nav: number;
+  roe: number;
+  profitMargin: number;
 }
 
 export const calculateRatios = (metrics: StockMetrics): ValuationRatios => {
   const bookValue = metrics.totalEquity / metrics.outstandingShares;
   const marketCap = metrics.price * metrics.outstandingShares;
-  const nav = (metrics.totalAssets - metrics.totalLiabilities) / metrics.outstandingShares;
-
+  
   return {
     pe: metrics.price / metrics.eps,
     pb: metrics.price / bookValue,
     ps: marketCap / metrics.totalRevenue,
-    peg: (metrics.price / metrics.eps) / ((metrics.netIncome / metrics.totalEquity) * 100),
-    nav: nav
+    roe: (metrics.netIncome / metrics.totalEquity) * 100,
+    profitMargin: (metrics.netIncome / metrics.totalRevenue) * 100
   };
 };
 
@@ -57,6 +54,6 @@ export const industryBenchmarks = {
   pe: 15,
   pb: 2.5,
   ps: 2.0,
-  peg: 1.0,
-  nav: 1.0,
+  roe: 15,
+  profitMargin: 10
 };
