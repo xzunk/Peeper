@@ -60,15 +60,13 @@ export const industryBenchmarks = {
 
 // Function to handle float numbers in input parsing
 export const parseNumberInput = (value: string): number => {
-  // Remove all commas and spaces
-  const cleanValue = value.replace(/,|\s/g, '');
+  // Replace comma with dot and remove spaces
+  const cleanValue = value.replace(/\s/g, '').replace(',', '.');
 
-  // Check if it's a valid number (including decimals)
-  if (!/^-?\d*\.?\d*$/.test(cleanValue)) return 0;
+  // Validate format: only one decimal point allowed
+  if (!/^-?\d+(\.\d+)?$/.test(cleanValue)) return 0;
 
-  // Convert to number, handling both integer and float
+  // Convert to number and return
   const parsedValue = parseFloat(cleanValue);
-
-  // Return 0 if NaN, otherwise return the parsed value
   return isNaN(parsedValue) ? 0 : parsedValue;
 };
