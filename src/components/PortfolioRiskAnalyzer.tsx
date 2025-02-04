@@ -57,78 +57,15 @@ const PortfolioRiskAnalyzer = () => {
   };
 
   const calculateRisk = () => {
-      
-//
- 
-Calculate
- 
-total
- 
-allocation
- 
-with
- 
-higher
- 
-precision
-
+            // Calculate total allocation with higher precision
     const totalAllocation = stocks.reduce((sum, stock) => sum + (stock.allocation || 0), 0);
-
     
-
-    
-
-    
-if
- 
-(Math.abs(totalAllocation
- 
--
- 
-100)
- 
->
- 
-0.01)
- 
-{
-
-    
-//
- 
-Use
- 
-a
- 
-small
- 
-epsilon
- 
-value
- 
-for floating-point comparison
-
+    // Use a small epsilon value for floating-point comparison
     const epsilon = 0.0001;
-
     if (Math.abs(totalAllocation - 100) > epsilon) {
-
       toast({
-
-      toast({
-
         title: "Validation Error",
-
-        title: "Validation Error",
-
-        description: 
-"
-Total allocation must equal 100
-%",
-
-        description: 
-`
-Total allocation must equal 100
-%. Current total: ${totalAllocation.toFixed(2)}%`,
+        description: `Total allocation must equal 100%. Current total: ${totalAllocation.toFixed(2)}%`,
         variant: "destructive"
       });
       return;
