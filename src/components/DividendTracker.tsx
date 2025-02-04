@@ -228,7 +228,7 @@ const DividendTracker = () => {
                   Total Annual Dividend Income
                 </AlertTitle>
                 <AlertDescription className="text-2xl font-mono mt-2">
-                  ${summary.totalAnnualIncome.toFixed(2)}
+                  {summary.totalAnnualIncome.toFixed(2)}
                 </AlertDescription>
               </Alert>
               
@@ -243,7 +243,7 @@ const DividendTracker = () => {
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="font-semibold mb-2">Monthly Income</h3>
                   <p className="text-2xl font-mono text-green-600">
-                    ${summary.monthlyIncome.toFixed(2)}
+                    {summary.monthlyIncome.toFixed(2)}
                   </p>
                 </div>
               </div>
