@@ -27,7 +27,7 @@ const StockCalculator = () => {
     netIncome: 0,
     totalEquity: 0,
     outstandingShares: 0,
-    growthRate: 0,
+    
   });
   const [ratios, setRatios] = useState<ValuationRatios | null>(null);
 
@@ -141,9 +141,7 @@ const StockCalculator = () => {
               { label: 'Net Income (Mn)', name: 'netIncome' },
               { label: 'Total Equity (Mn)', name: 'totalEquity' },
               { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' }
-              ,
-
-              { label: 'Growth Rate (%)', name: 'growthRate' }
+          
             ].map(field => (
               <div key={field.name} className="space-y-1.5">
                 <Label htmlFor={field.name}>{field.label}</Label>
