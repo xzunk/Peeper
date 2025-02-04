@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FileText, Mail, Menu, X } from "lucide-react";
+import { Calculator, FileText, Mail, Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    console.log('Mobile menu toggled:', !isMenuOpen);
   };
 
   return (
@@ -19,6 +18,14 @@ const Navigation = () => {
           </Link>
           
           <div className="hidden md:flex space-x-8">
+            <Link to="/" className="flex items-center text-slate hover:text-navy">
+              <Calculator className="w-4 h-4 mr-1" />
+              Stock Valuation
+            </Link>
+            <Link to="/profit" className="flex items-center text-slate hover:text-navy">
+              <Calculator className="w-4 h-4 mr-1" />
+              Profit Calculator
+            </Link>
             <Link to="/terms" className="flex items-center text-slate hover:text-navy">
               <FileText className="w-4 h-4 mr-1" />
               Terms
@@ -46,9 +53,24 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-4">
+            <Link 
+              to="/" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Calculator className="w-4 h-4 mr-1" />
+              Stock Valuation
+            </Link>
+            <Link 
+              to="/profit" 
+              className="flex items-center text-slate hover:text-navy px-4 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Calculator className="w-4 h-4 mr-1" />
+              Profit Calculator
+            </Link>
             <Link 
               to="/terms" 
               className="flex items-center text-slate hover:text-navy px-4 py-2"
