@@ -251,11 +251,11 @@ const DividendTracker = () => {
               <div className="p-4 bg-gray-50 rounded-lg">
                 <h3 className="font-semibold mb-2">Income Breakdown</h3>
                 <div className="space-y-2 text-sm">
-                  <p>Daily: ${(summary.totalAnnualIncome / 365).toFixed(2)}</p>
-                  <p>Weekly: ${(summary.totalAnnualIncome / 52).toFixed(2)}</p>
-                  <p>Monthly: ${summary.monthlyIncome.toFixed(2)}</p>
-                  <p>Quarterly: ${(summary.totalAnnualIncome / 4).toFixed(2)}</p>
-                  <p>Annual: ${summary.totalAnnualIncome.toFixed(2)}</p>
+                  <p>Daily: {(summary.totalAnnualIncome / 365).toFixed(2)}</p>
+                  <p>Weekly: {(summary.totalAnnualIncome / 52).toFixed(2)}</p>
+                  <p>Monthly: {summary.monthlyIncome.toFixed(2)}</p>
+                  <p>Quarterly: {(summary.totalAnnualIncome / 4).toFixed(2)}</p>
+                  <p>Annual: {summary.totalAnnualIncome.toFixed(2)}</p>
                 </div>
               </div>
             </div>
