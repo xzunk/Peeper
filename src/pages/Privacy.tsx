@@ -1,14 +1,16 @@
 import React from 'react';
 import SEO from "@/components/SEO";
+import Footer from "@/components/Footer";
 
 const Privacy = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
       <SEO 
         title="Privacy Policy - Stock Calculator Tools"
         description="Our privacy policy explains how we handle your data when using our stock calculation tools. Learn about data collection, usage, and protection."
+        keywords="privacy policy, data protection, user privacy, stock calculator privacy"
       />
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-grow">
         <h1 className="text-3xl font-bold mb-6 dark:text-white">Privacy Policy</h1>
         <div className="prose prose-slate dark:prose-invert max-w-none">
           <h2 className="text-2xl font-semibold mt-8 mb-4">Data Collection</h2>
@@ -187,6 +189,7 @@ const Privacy = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

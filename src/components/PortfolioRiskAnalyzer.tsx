@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { parseNumberInput } from '@/utils/stockCalculations';
+import SEO from "@/components/SEO";
+import Footer from "@/components/Footer";
 
 interface PortfolioStock {
   ticker: string;
@@ -114,8 +116,14 @@ const PortfolioRiskAnalyzer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+      <SEO 
+        title="Portfolio Risk Analyzer - Analyze Investment Risk"
+        description="Analyze your investment portfolio risk with our Portfolio Risk Analyzer. Calculate beta values, assess risk levels, and get personalized recommendations."
+        keywords="portfolio risk, investment risk, beta calculation, risk analyzer, stock portfolio"
+      />
+      
+      <div className="container mx-auto px-4 max-w-7xl flex-grow">
         <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-navy">
           Portfolio Risk Analyzer
         </h1>
@@ -238,6 +246,8 @@ const PortfolioRiskAnalyzer = () => {
           </Card>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

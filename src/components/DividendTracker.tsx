@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { parseNumberInput } from '@/utils/stockCalculations';
+import SEO from "@/components/SEO";
+import Footer from "@/components/Footer";
 
 interface DividendStock {
   ticker: string;
@@ -114,8 +116,14 @@ const DividendTracker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+      <SEO 
+        title="Dividend Income Tracker - Track Your Dividend Portfolio"
+        description="Track and analyze your dividend income with our Dividend Income Tracker. Monitor dividend payments, calculate yields, and plan your passive income strategy."
+        keywords="dividend tracker, dividend income, dividend yield, passive income, dividend stocks"
+      />
+      
+      <div className="container mx-auto px-4 max-w-7xl flex-grow">
         <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-navy">
           Dividend Income Tracker
         </h1>
@@ -268,6 +276,8 @@ const DividendTracker = () => {
           </Card>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
