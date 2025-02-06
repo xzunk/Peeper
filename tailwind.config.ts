@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -19,43 +18,19 @@ export default {
     },
     extend: {
       colors: {
-        navy: "#1a237e",
-        slate: "#64748b",
+        primary: "#9b87f5",
+        secondary: "#7E69AB",
+        tertiary: "#6E59A5",
+        accent: "#1EAEDB",
+        background: "#FFFFFF",
+        foreground: "#1A1F2C",
+        muted: "#8A898C",
+        border: "#C8C8C9",
+        input: "#F6F6F7",
+        card: "#FFFFFF",
+        "card-foreground": "#1A1F2C",
         success: "#15803d",
         warning: "#c2410c",
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
