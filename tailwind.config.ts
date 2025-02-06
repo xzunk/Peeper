@@ -18,9 +18,12 @@ export default {
     },
     extend: {
       colors: {
-        primary: "#9b87f5",
-        secondary: "#7E69AB",
-        tertiary: "#6E59A5",
+        "line-white": "#FFFFFF",
+        "line-black": "#000000",
+        "line-green": "#00C300",
+        primary: "#00C300",
+        secondary: "#00B300",
+        tertiary: "#00A300",
         accent: "#1EAEDB",
         background: "#FFFFFF",
         foreground: "#1A1F2C",
@@ -48,7 +51,6 @@ export default {
       },
       animation: {
         "fade-in": "fade-in 0.5s ease-out",
-        "pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       }
     },
   },
