@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { parseNumberInput } from '@/utils/stockCalculations';
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
+import StockInput from "./portfolio/StockInput";
+import RiskAnalysis from "./portfolio/RiskAnalysis";
+import PortfolioVisualization from "./portfolio/PortfolioVisualization";
 
 interface PortfolioStock {
   ticker: string;
-  allocation: number;
+  shares: number;
   beta: number;
+  allocation: number;
 }
 
 const STORAGE_KEY = 'portfolioRiskData';
@@ -20,7 +20,7 @@ const STORAGE_KEY = 'portfolioRiskData';
 const PortfolioRiskAnalyzer = () => {
   const { toast } = useToast();
   const [stocks, setStocks] = useState<PortfolioStock[]>([
-    { ticker: '', allocation: 0, beta: 0 }
+    { ticker: '', shares: 0, beta: 0, allocation: 0 }
   ]);
   const [portfolioRisk, setPortfolioRisk] = useState<{
     totalBeta: number;
@@ -32,13 +32,14 @@ const PortfolioRiskAnalyzer = () => {
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        // Ensure all numerical values are properly initialized
         const validatedData = parsedData.map((stock: PortfolioStock) => ({
           ...stock,
-          allocation: Number(stock.allocation) || 0,
-          beta: Number(stock.beta) || 0
+          shares: Number(stock.shares) || 0,
+          beta: Number(stock.beta) || 0,
+          allocation: Number(stock.allocation) || 0
         }));
         setStocks(validatedData);
+        updateAllocations(validatedData);
       } catch (e) {
         console.error('Error parsing saved data:', e);
         localStorage.removeItem(STORAGE_KEY);
@@ -50,63 +51,91 @@ const PortfolioRiskAnalyzer = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stocks));
   }, [stocks]);
 
- const handleInputChange = (index: number, field: keyof PortfolioStock, value: string) => {
-  const newStocks = [...stocks];
+  const updateAllocations = (currentStocks: PortfolioStock[]) => {
+    const totalShares = currentStocks.reduce((sum, stock) => sum + stock.shares, 0);
+    
+    if (totalShares === 0) {
+      const updatedStocks = currentStocks.map(stock => ({ ...stock, allocation: 0 }));
+      setStocks(updatedStocks);
+      return;
+    }
 
-  newStocks[index] = {
-    ...newStocks[index],
-    [field]: field === 'ticker' ? value : value // Store as string to preserve decimal input
+    const updatedStocks = currentStocks.map(stock => ({
+      ...stock,
+      allocation: (stock.shares / totalShares) * 100
+    }));
+    
+    setStocks(updatedStocks);
   };
 
-  setStocks(newStocks);
-};
+  const handleInputChange = (index: number, field: keyof PortfolioStock, value: string) => {
+    const newStocks = [...stocks];
+    const parsedValue = field === 'shares' ? Math.max(0, parseInt(value) || 0) : value;
+    
+    newStocks[index] = {
+      ...newStocks[index],
+      [field]: parsedValue
+    };
 
+    if (field === 'shares') {
+      updateAllocations(newStocks);
+    } else {
+      setStocks(newStocks);
+    }
+  };
+
+  const handleSharesAdjustment = (index: number, increment: boolean) => {
+    const newStocks = [...stocks];
+    const currentShares = newStocks[index].shares;
+    newStocks[index] = {
+      ...newStocks[index],
+      shares: increment ? currentShares + 1 : Math.max(0, currentShares - 1)
+    };
+    updateAllocations(newStocks);
+  };
 
   const addStock = () => {
-    setStocks([...stocks, { ticker: '', allocation: 0, beta: 0 }]);
+    const newStocks = [...stocks, { ticker: '', shares: 0, beta: 0, allocation: 0 }];
+    setStocks(newStocks);
+    updateAllocations(newStocks);
   };
 
   const removeStock = (index: number) => {
     if (stocks.length > 1) {
       const newStocks = stocks.filter((_, i) => i !== index);
-      setStocks(newStocks);
+      updateAllocations(newStocks);
     }
   };
 
   const calculateRisk = () => {
-    // Calculate total allocation with higher precision
-    const totalAllocation = stocks.reduce((sum, stock) => sum + (Number(stock.allocation) || 0), 0);
-    
-    // Use a small epsilon value for floating-point comparison
+    const totalAllocation = stocks.reduce((sum, stock) => sum + stock.allocation, 0);
     const epsilon = 0.0001;
+    
     if (Math.abs(totalAllocation - 100) > epsilon) {
       toast({
         title: "Validation Error",
-        description: `Total allocation must equal 100%. Current total: ${Number(totalAllocation).toFixed(2)}%`,
+        description: `Total allocation must equal 100%. Current total: ${totalAllocation.toFixed(2)}%`,
         variant: "destructive"
       });
       return;
     }
 
     const weightedBeta = stocks.reduce((sum, stock) => {
-  const allocation = Number(stock.allocation) || 0;
-  const beta = parseFloat(stock.beta as unknown as string) || 0; // Ensure conversion here
-  return sum + (beta * (allocation / 100));
-}, 0);
-
+      return sum + (stock.beta * (stock.allocation / 100));
+    }, 0);
 
     let riskLevel = 'Moderate';
     if (weightedBeta < 0.8) riskLevel = 'Low';
     else if (weightedBeta > 1.2) riskLevel = 'High';
 
     setPortfolioRisk({
-      totalBeta: Number(weightedBeta),
+      totalBeta: weightedBeta,
       riskLevel
     });
   };
 
   const handleClear = () => {
-    setStocks([{ ticker: '', allocation: 0, beta: 0 }]);
+    setStocks([{ ticker: '', shares: 0, beta: 0, allocation: 0 }]);
     setPortfolioRisk(null);
     localStorage.removeItem(STORAGE_KEY);
     toast({
@@ -116,7 +145,7 @@ const PortfolioRiskAnalyzer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+    <div className="min-h-screen bg-gray-50 py-8 flex flex-col">
       <SEO 
         title="Portfolio Risk Analyzer - Analyze Investment Risk"
         description="Analyze your investment portfolio risk with our Portfolio Risk Analyzer. Calculate beta values, assess risk levels, and get personalized recommendations."
@@ -130,121 +159,56 @@ const PortfolioRiskAnalyzer = () => {
         
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
           <Card className="p-4 md:p-6 shadow-sm bg-white">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg md:text-xl font-semibold text-navy">Portfolio Composition</h2>
-            <Button 
-              onClick={handleClear}
-              variant="outline"
-              className="text-red-600 hover:text-red-700"
-            >
-              Clear All
-            </Button>
-          </div>
-          
-          <div className="space-y-4">
-            {stocks.map((stock, index) => (
-              <div key={index} className="grid grid-cols-3 gap-4 items-end">
-                <div>
-                  <Label>Stock Ticker</Label>
-                  <Input
-                    value={stock.ticker}
-                    onChange={(e) => handleInputChange(index, 'ticker', e.target.value)}
-                    placeholder="e.g., AAPL"
-                  />
-                </div>
-                <div>
-                  <Label>Allocation (%)</Label>
-                  <Input
-                    value={stock.allocation || ''}
-                    onChange={(e) => handleInputChange(index, 'allocation', e.target.value)}
-                    placeholder="e.g., 25"
-                  />
-                </div>
-                <div>
-                  <Label>Beta</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      value={stock.beta || ''}
-                      onChange={(e) => handleInputChange(index, 'beta', e.target.value)}
-                      placeholder="e.g., 1.2"
-                    />
-                    {stocks.length > 1 && (
-                      <Button
-                        variant="outline"
-                        onClick={() => removeStock(index)}
-                        className="text-red-600"
-                      >
-                        X
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg md:text-xl font-semibold text-navy">Portfolio Composition</h2>
+              <Button 
+                onClick={handleClear}
+                variant="outline"
+                className="text-red-600 hover:text-red-700"
+              >
+                Clear All
+              </Button>
+            </div>
             
-            <Button 
-              onClick={addStock}
-              variant="outline"
-              className="w-full mt-2"
-            >
-              Add Stock
-            </Button>
-            
-            <Button 
-              onClick={calculateRisk}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
-            >
-              Calculate Portfolio Risk
-            </Button>
-          </div>
+            <div className="space-y-4">
+              {stocks.map((stock, index) => (
+                <StockInput
+                  key={index}
+                  stock={stock}
+                  index={index}
+                  onInputChange={handleInputChange}
+                  onSharesAdjustment={handleSharesAdjustment}
+                  onRemoveStock={removeStock}
+                  showRemove={stocks.length > 1}
+                />
+              ))}
+              
+              <Button 
+                onClick={addStock}
+                variant="outline"
+                className="w-full mt-2"
+              >
+                Add Stock
+              </Button>
+              
+              <Button 
+                onClick={calculateRisk}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
+              >
+                Calculate Portfolio Risk
+              </Button>
+            </div>
           </Card>
 
           <Card className="p-4 md:p-6 shadow-sm bg-white">
-          <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Risk Analysis</h2>
-          
-          {portfolioRisk ? (
-            <div className="space-y-4 animate-fade-in">
-              <Alert className={`
-                ${portfolioRisk.riskLevel === 'Low' ? 'bg-green-50 border-l-green-500' :
-                  portfolioRisk.riskLevel === 'High' ? 'bg-red-50 border-l-red-500' :
-                  'bg-yellow-50 border-l-yellow-500'} 
-                border-l-4
-              `}>
-                <AlertTitle className="text-lg font-semibold">
-                  Portfolio Risk Level: {portfolioRisk.riskLevel}
-                </AlertTitle>
-                <AlertDescription>
-                  Portfolio Beta: {portfolioRisk.totalBeta.toFixed(2)}
-                </AlertDescription>
-              </Alert>
-              
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold mb-2">Risk Interpretation</h3>
-                <p className="text-sm text-gray-600">
-                  {portfolioRisk.totalBeta < 1
-                    ? "Your portfolio is less volatile than the market average."
-                    : portfolioRisk.totalBeta > 1
-                    ? "Your portfolio is more volatile than the market average."
-                    : "Your portfolio closely follows market movements."}
-                </p>
-              </div>
-              
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold mb-2">Risk Management Tips</h3>
-                <ul className="text-sm text-gray-600 list-disc list-inside space-y-1">
-                  <li>Consider diversifying across different sectors</li>
-                  <li>Balance high-beta stocks with low-beta stocks</li>
-                  <li>Review and rebalance your portfolio regularly</li>
-                </ul>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center text-gray-500 py-8">
-              Enter your portfolio details and calculate to see risk analysis. You Can Find Beta Value From Stock Exchage Website!
-            </div>
-          )}
+            <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Risk Analysis</h2>
+            <RiskAnalysis portfolioRisk={portfolioRisk} />
           </Card>
         </div>
+
+        <Card className="p-4 md:p-6 shadow-sm bg-white">
+          <PortfolioVisualization stocks={stocks} />
+        </Card>
       </div>
       
       <Footer />

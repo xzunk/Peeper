@@ -116,7 +116,7 @@ const DividendTracker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+    <div className="min-h-screen bg-gray-50  py-8 flex flex-col">
       <SEO 
         title="Dividend Income Tracker - Track Your Dividend Portfolio"
         description="Track and analyze your dividend income with our Dividend Income Tracker. Monitor dividend payments, calculate yields, and plan your passive income strategy."
