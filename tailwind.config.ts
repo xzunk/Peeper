@@ -25,7 +25,7 @@ export default {
         secondary: "#00B300",
         tertiary: "#00A300",
         accent: "#1EAEDB",
-        background: "rgb(204, 206, 210)",
+        background: "#FFFFFF",
         foreground: "#1A1F2C",
         muted: "#8A898C",
         border: "#C8C8C9",
