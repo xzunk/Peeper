@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 
 const Terms = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+    <div className="min-h-screen bg-gray-50 py-8 flex flex-col">
       <SEO 
         title="Terms of Service - Stock Calculator Tools"
         description="Terms of service for using our stock calculation tools. Learn about usage terms, disclaimers, and data privacy policies."
