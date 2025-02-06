@@ -12,6 +12,7 @@ interface AISuggestionsProps {
 declare global {
   interface Window {
     puter: {
+      init: (config: { type: string }) => Promise<void>;
       ai: {
         chat: (prompt: string) => Promise<string>;
       };
@@ -30,9 +31,14 @@ const AISuggestions = ({ peRatio, pbRatio, marketPrice }: AISuggestionsProps) =>
       
       setLoading(true);
       try {
+        // Wait for Puter.js to be fully initialized
+        if (!window.puter?.ai) {
+          console.log('Waiting for Puter.js initialization...');
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
         // Check if Puter.js is properly initialized
-        if (!window.puter || !window.puter.ai) {
-          console.error('Puter.js not initialized');
+        if (!window.puter?.ai) {
           throw new Error('AI service not available');
         }
 

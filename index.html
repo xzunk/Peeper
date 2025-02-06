@@ -25,11 +25,15 @@
     <script src="https://js.puter.com/v2/"></script>
     <script>
       // Initialize Puter.js when the script loads
-      window.addEventListener('load', function() {
-        if (window.puter) {
-          console.log('Puter.js initialized successfully');
-        } else {
-          console.error('Failed to initialize Puter.js');
+      window.addEventListener('load', async function() {
+        try {
+          // Initialize puter with guest access
+          await window.puter.init({
+            type: 'guest'
+          });
+          console.log('Puter.js initialized successfully as guest');
+        } catch (error) {
+          console.error('Failed to initialize Puter.js:', error);
         }
       });
     </script>
