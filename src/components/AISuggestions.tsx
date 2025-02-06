@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 interface AISuggestionsProps {
   peRatio: number;
@@ -21,6 +22,7 @@ declare global {
 const AISuggestions = ({ peRatio, pbRatio, marketPrice }: AISuggestionsProps) => {
   const [suggestions, setSuggestions] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const getSuggestions = async () => {
@@ -28,6 +30,12 @@ const AISuggestions = ({ peRatio, pbRatio, marketPrice }: AISuggestionsProps) =>
       
       setLoading(true);
       try {
+        // Check if Puter.js is properly initialized
+        if (!window.puter || !window.puter.ai) {
+          console.error('Puter.js not initialized');
+          throw new Error('AI service not available');
+        }
+
         const prompt = `As a financial advisor, analyze these stock metrics and provide brief investment advice:
           PE Ratio: ${peRatio}
           PB Ratio: ${pbRatio}
@@ -38,6 +46,11 @@ const AISuggestions = ({ peRatio, pbRatio, marketPrice }: AISuggestionsProps) =>
         setSuggestions(response);
       } catch (error) {
         console.error('Error getting AI suggestions:', error);
+        toast({
+          title: "Error",
+          description: "Unable to generate AI suggestions at this time. Please try again later.",
+          variant: "destructive",
+        });
         setSuggestions('Unable to generate suggestions at this time.');
       } finally {
         setLoading(false);
@@ -45,7 +58,7 @@ const AISuggestions = ({ peRatio, pbRatio, marketPrice }: AISuggestionsProps) =>
     };
 
     getSuggestions();
-  }, [peRatio, pbRatio, marketPrice]);
+  }, [peRatio, pbRatio, marketPrice, toast]);
 
   if (!peRatio || !pbRatio || !marketPrice) return null;
 

@@ -10,8 +10,7 @@
     <meta property="og:title" content="Stock Valuation & Profit Calculator for CSE" />
     <meta property="og:description" content="Calculate stock valuations and trading profits for Colombo Stock Exchange (CSE). Includes brokerage fees and intraday trading calculations." />
     <meta property="og:image" content="/og-image.png" />
-   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&
-display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
     
     <!-- Google tag (gtag.js) -->
@@ -24,11 +23,21 @@ display=swap" rel="stylesheet">
       gtag('config', 'G-1GMVWEL30C');
     </script>
     <script src="https://js.puter.com/v2/"></script>
+    <script>
+      // Initialize Puter.js when the script loads
+      window.addEventListener('load', function() {
+        if (window.puter) {
+          console.log('Puter.js initialized successfully');
+        } else {
+          console.error('Failed to initialize Puter.js');
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
-    	<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/f3b1d69ba5528f8dbca1e778/script.js"></script> 
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/f3b1d69ba5528f8dbca1e778/script.js"></script> 
   </body>
 </html>
