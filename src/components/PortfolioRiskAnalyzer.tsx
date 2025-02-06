@@ -116,7 +116,7 @@ const PortfolioRiskAnalyzer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+    <div className="min-h-screen bg-gray-50  py-8 flex flex-col">
       <SEO 
         title="Portfolio Risk Analyzer - Analyze Investment Risk"
         description="Analyze your investment portfolio risk with our Portfolio Risk Analyzer. Calculate beta values, assess risk levels, and get personalized recommendations."
