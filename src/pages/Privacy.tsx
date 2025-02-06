@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 
 const Privacy = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex flex-col">
+    <div className="min-h-screen bg-gray-50  py-8 flex flex-col">
       <SEO 
         title="Privacy Policy - Stock Calculator Tools"
         description="Our privacy policy explains how we handle your data when using our stock calculation tools. Learn about data collection, usage, and protection."
