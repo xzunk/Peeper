@@ -1,7 +1,7 @@
 const Contact = () => {
   return (
-    <div>
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-grow">
         <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
         <div className="prose prose-slate max-w-none">
           <p className="mb-6">Have questions about using our Stock Valuation Calculator? We're here to help.</p>
@@ -18,8 +18,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-
-     
+      <Footer />
     </div>
   );
 };
