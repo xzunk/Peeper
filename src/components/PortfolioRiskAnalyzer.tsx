@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import StockInput from "./portfolio/StockInput";
+import PortfolioHeader from "./portfolio/PortfolioHeader";
+import PortfolioForm from "./portfolio/PortfolioForm";
 import RiskAnalysis from "./portfolio/RiskAnalysis";
 import PortfolioVisualization from "./portfolio/PortfolioVisualization";
 
@@ -146,59 +145,19 @@ const PortfolioRiskAnalyzer = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <SEO 
-        title="Portfolio Risk Analyzer - Analyze Investment Risk"
-        description="Analyze your investment portfolio risk with our Portfolio Risk Analyzer. Calculate beta values, assess risk levels, and get personalized recommendations."
-        keywords="portfolio risk, investment risk, beta calculation, risk analyzer, stock portfolio"
-      />
+      <PortfolioHeader />
       
       <div className="container mx-auto px-4 max-w-7xl flex-grow py-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-navy">
-          Portfolio Risk Analyzer
-        </h1>
-        
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-8">
-          <Card className="p-4 md:p-6 shadow-sm bg-white">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg md:text-xl font-semibold text-navy">Portfolio Composition</h2>
-              <Button 
-                onClick={handleClear}
-                variant="outline"
-                className="text-red-600 hover:text-red-700"
-              >
-                Clear All
-              </Button>
-            </div>
-            
-            <div className="space-y-4">
-              {stocks.map((stock, index) => (
-                <StockInput
-                  key={index}
-                  stock={stock}
-                  index={index}
-                  onInputChange={handleInputChange}
-                  onSharesAdjustment={handleSharesAdjustment}
-                  onRemoveStock={removeStock}
-                  showRemove={stocks.length > 1}
-                />
-              ))}
-              
-              <Button 
-                onClick={addStock}
-                variant="outline"
-                className="w-full mt-2"
-              >
-                Add Stock
-              </Button>
-              
-              <Button 
-                onClick={calculateRisk}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
-              >
-                Calculate Portfolio Risk
-              </Button>
-            </div>
-          </Card>
+          <PortfolioForm
+            stocks={stocks}
+            onInputChange={handleInputChange}
+            onSharesAdjustment={handleSharesAdjustment}
+            onRemoveStock={removeStock}
+            onAddStock={addStock}
+            onCalculateRisk={calculateRisk}
+            onClear={handleClear}
+          />
 
           <Card className="p-4 md:p-6 shadow-sm bg-white">
             <h2 className="text-lg md:text-xl font-semibold mb-4 text-navy">Risk Analysis</h2>
