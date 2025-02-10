@@ -254,9 +254,7 @@ const StockCalculator = () => {
             </p>
           </div>
         </div>
-        <div className="text-center mt-8 text-sm text-gray-500">
-          © {new Date().getFullYear()} Peeper| Backed by CosmoETSP. All rights reserved.
-        </div>
+     
       </footer>
     </div>
   );
