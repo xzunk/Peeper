@@ -35,18 +35,7 @@ const Navigation = () => {
               <DollarSign className="w-4 h-4 mr-1" />
               Dividend Tracker
             </Link>
-            <Link to="/terms" className="flex items-center text-white hover:text-gray-300 transition-colors">
-              <FileText className="w-4 h-4 mr-1" />
-              Terms
-            </Link>
-            <Link to="/privacy" className="flex items-center text-white hover:text-gray-300 transition-colors">
-              <FileText className="w-4 h-4 mr-1" />
-              Privacy
-            </Link>
-            <Link to="/contact" className="flex items-center text-white hover:text-gray-300 transition-colors">
-              <Mail className="w-4 h-4 mr-1" />
-              Contact
-            </Link>
+            
           </div>
           
           <button 
