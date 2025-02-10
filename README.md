@@ -6,7 +6,7 @@ Open source Stockmarket Analyze Tool for - Calculate Undervaled Stocks, Protfoli
 
 ## Authors
 
-- @xzunk(https://www.github.com/xzunk)
+- @xzunk (https://www.github.com/xzunk)
 
 
 ## Contributing
