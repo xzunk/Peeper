@@ -248,9 +248,9 @@ const StockCalculator = () => {
             </p>
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-navy mb-2">Contact</h3>
+            <h3 className="font-semibold text-navy mb-2"></h3>
             <p className="text-sm text-gray-600">
-              For support or inquiries, please visit our contact page or email cs@cosmo.com.lk
+              
             </p>
           </div>
         </div>
