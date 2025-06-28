@@ -15,7 +15,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="font-bold text-xl text-white">
-            Peeper
+            Market
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
