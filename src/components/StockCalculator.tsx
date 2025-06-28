@@ -137,10 +137,10 @@ const StockCalculator = () => {
             {[
               { label: 'Current Stock Price ', name: 'price' },
               { label: 'Earnings Per Share - EPS ', name: 'eps' },
-              { label: 'Total Revenue (Mn)', name: 'totalRevenue' },
-              { label: 'Net Income (Mn)', name: 'netIncome' },
-              { label: 'Total Equity (Mn)', name: 'totalEquity' },
-              { label: 'Outstanding Shares (Mn)', name: 'outstandingShares' }
+              { label: 'Total Revenue ', name: 'totalRevenue' },
+              { label: 'Net Income ', name: 'netIncome' },
+              { label: 'Total Equity ', name: 'totalEquity' },
+              { label: 'Outstanding Shares ', name: 'outstandingShares' }
           
             ].map(field => (
               <div key={field.name} className="space-y-1.5">
